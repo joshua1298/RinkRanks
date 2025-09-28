@@ -1,0 +1,63 @@
+
+
+
+:root{
+    --listItemWidth: 200px;
+    --listItemHeight: 70px;
+    --spaceBetween: 4px;
+
+    --color-a: #564787;
+    --color-b: #AE8A3A;
+    --color-c: #f2fdff;
+    --color-d: #eca400;
+    --color-e: #101935;
+    
+    --color-f: #dcedff;
+    --color-g: #94b0da;
+    --color-h: #8f91a2;
+    --color-i: #505a5b;
+    --color-j: #343f3e;
+
+    --color-k: #282810;
+    --color-l: #4e4e78;
+    --color-m: #777791;
+    --color-n: #9d9dab;
+    --color-o: #ceceeb;
+
+
+
+    --color-p: #119da4;
+    --color-p1: #90e0e4;
+    --color-p2: #63f7ff;
+    --color-p3: #d1f3a5;
+    
+    --color-q: #0c7489;
+    --color-q1: #405f65;
+    --color-q2: #70d6ea;
+    --color-q3: #00d2fc; 
+
+    --color-r: #13505b;
+    --color-r1: #62a0ab;
+    --color-r2: #2f4d53;
+
+    --color-odd: rgb(253, 255, 240);
+    --color-even: #f6f7e2;
+
+    --color-s: #040404;
+    --color-t: #ecfbb3;
+    --color-t-white: #f0f6d8;
+  
+}
+
+body{
+    background-color: rgb(253, 255, 240);
+}
+
+
+.montserrat-font {
+    font-family: "Montserrat", sans-serif;
+    font-optical-sizing: auto;
+    font-weight: 450;
+    font-style: normal;
+}
+

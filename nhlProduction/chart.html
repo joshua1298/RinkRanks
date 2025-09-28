@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rink Ranks</title>
+
+    <link rel="stylesheet" type="text/css" href="nhl.css" media="screen" />
+    
+    <!--Tailwind CSS-->
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body>
+    
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <div class="w-dvh h-20 md:16 flex justify-between gap-x-4 bg-[var(--color-t)] border-b-2 border-black shadow-md hover:shadow-xl transition-shadow duration-300">
+        <div id="title" class="flex flex-col w-52 pl-2 justify-center items-center text-center">
+            <a href="index.html">
+                <h1 class="font-bold text-4xl">Rink Ranks</h1>
+                <h2 class="text-sm italic">Math Based Power Ranking</h2>
+            </a>
+        </div>
+
+        <div id="week" class="w-48 flex items-center justify-center text-3xl ">Week 22</div>
+
+        <div class="w-2/3 px-2 flex justify-around">
+            <button type="button" class="hover:font-bold">Past Weeks</button>
+            <button type="button" class="hover:font-bold">Cumlative Ranking</button>
+            <button type="button" class="hover:font-bold">Current Standings</button>
+            <button type="button" class="font-bold">Charts and Visuals</button>
+            <button type="button" class="hover:font-bold">Rules</button>
+            <!--can add links for github/website-->
+        </div>
+    </div>
+
+    <div class="max-w-full flex justify-between mx-5 mt-10 ">
+        <div class="bg-[var(--color-t-white)] flex flex-col justify-around w-72 h-64 ml-8 mt-16 mr-5 pl-2 ">
+            <div class="flex justify-around">    
+                <label class="w-24 text-right" for="team">Team</label>
+                <select id="team" class="border border-black font-bold text-center w-[9rem]" name="team">
+                    <option value="COL">Avalanche</option>
+                    <option value="CHI">Blackhawks</option>
+                    <option value="STL">Blues</option>
+                    <option value="CBJ">Blue Jackets</option>
+                    <option value="BOS">Bruins</option>
+                    <option value="MTL">Canadiens</option>
+                    <option value="VAN">Canucks</option>
+                    <option value="WSH">Capitals</option>
+                    <option value="NJD">Devils</option>
+                    <option value="ANA">Ducks</option>
+                    <option value="CGY">Flames</option>
+                    <option value="PHI">Flyers</option>
+                    <option value="VGK">Golden Knights</option>
+                    <option value="CAR">Hurricanes</option>
+                    <option value="NYI">Islanders</option>
+                    <option value="WPG">Jets</option>
+                    <option value="LAK">Kings</option>
+                    <option value="SEA">Kraken</option>
+                    <option value="TOR">Leafs</option>
+                    <option value="TBL">Lightning</option>
+                    <option value="UTA">Mammoth</option>
+                    <option value="EDM">Oilers</option>
+                    <option value="FLA">Panthers</option>
+                    <option value="PIT">Penguins</option>
+                    <option value="NSH">Predators</option>
+                    <option value="NYR">Rangers</option>
+                    <option value="DET">Red Wings</option>
+                    <option value="BUF">Sabres</option>
+                    <option value="OTT">Senators</option>
+                    <option value="SJS">Sharks</option>
+                    <option value="DAL">Stars</option>
+                    <option value="MIN">Wild</option>
+                </select>
+            </div>
+            <div class="flex justify-around">
+                <label class="w-24 text-right" for="x-axis">X-Axis</label>
+                <select id="xaxis" class="border border-black font-bold text-center w-[9rem]" name="x-axis">
+                    <option value="0">Days</option>
+                    <option value="1">Weeks</option>
+                </select>
+            </div>
+            <div class="flex justify-around">
+                <label class="w-24 text-right" for="weeksBack">Weeks Back</label>
+                <select id="weekBack" class="border border-black font-bold text-center w-[9rem]" name="weeksBack">
+                    <option value="0">This Week Only</option>
+                    <option value="1">2</option>
+                    <option value="2">3</option>
+                    <option value="3">4</option>
+                    <option value="4">5</option>
+                    <option value="5">6</option>
+                    <option value="6">7</option>
+                    <option value="7">8</option>
+                    <option value="8">9</option>
+                    <option value="9">10</option>
+                    
+                </select>
+            </div>
+            <div class="flex justify-around">
+                <label class="w-24 text-right" for="accumulate">Cumulative</label>
+                <select id="accumulate" class="border border-black font-bold text-center w-[9rem]" name="accumulate">
+                    <option value="1">Cumulative score</option>
+                    <option value="0">Game by game score</option>
+                </select>
+            </div>
+
+            <button class="border border-black bg-[var(--color-t)] w-[9rem] ml-[6.9rem]" onclick="sendChartParams()">Create Score Graph</button>
+
+        </div>
+        <div class="flex justify-between w-[60rem] h-80 mr-32">
+            <div id="chartContainer" class="border-2 border-blue-500 w-[42rem]">
+                <canvas id="myChart"></canvas>
+            </div>
+            <div id="gameInfo" class=" w-[15rem]" style="overflow-y: auto">
+                <!-- test side data item
+                <div class="border border-gray-600 h-[4rem] rounded-md m-1 hover:bg-gray-100 transition duration-400">
+                    <div class ="flex justify-around border-b-2 border-gray-500 h-[2rem] text-center font-bold">
+                        <div class="flex w-[6rem] h-[2rem]">
+                            <div class="w-[2rem]">#13</div>
+                            <div class="flex justify-between w-[4rem]">
+                                <img class="w-[1.5rem] h-[2rem] " alt="Team Logo">
+                                <span>COL</span>
+                            </div>
+                        </div>
+                        <div class="w-[2rem] h-[2rem]">@</div>
+                        <div class="flex border border-red-500 w-[6rem] h-[2rem]">
+                            <div></div>
+                        </div>
+                    </div>
+                    <div class ="flex h-[2rem] text-center">
+                        <div class="w-[4rem] h-[1.9rem] font-bold text-lg border-r-2 border-gray-500">12 - 13</div>
+                        <div class="w-[3rem] h-[1.9rem] font-bold text-lg text-red-500 border-r-2 border-gray-500">OTL</div>
+                        <div class="w-[4rem] h-[1.9rem] font-bold text-lg border-r-2 border-gray-500">11/29</div>
+                        <div class="w-[3rem] h-[1.9rem] font-bold text-lg">-5.55</div>
+                    </div>
+                </div>
+                <div class="border border-gray-600 h-[4rem] rounded-md m-1 hover:bg-gray-100 transition-colors duration-400"></div>
+                <div class="border border-gray-600 h-[4rem] rounded-md m-1 hover:bg-gray-100 transition-colors duration-400"></div>
+                <div class="border border-gray-600 h-[4rem] rounded-md m-1 hover:bg-gray-100 transition-colors duration-400"></div>
+                <div class="border border-gray-600 h-[4rem] rounded-md m-1 hover:bg-gray-100 transition-colors duration-400"></div>
+                <div class="border border-gray-600 h-[4rem] rounded-md m-1 hover:bg-gray-100 transition-colors duration-400"></div>
+                <div class="border border-gray-600 h-[4rem] rounded-md m-1 hover:bg-gray-100 transition-colors duration-400"></div>
+            </div>
+        -->
+            </div>
+    </div>
+
+    
+    <script type="text/javascript" src="nhl.js"></script>
+    <script>
+        window.onload = () => {
+            const stored = localStorage.getItem("chartParams")
+            if(stored){
+                const params = JSON.parse(stored)
+                getGraphData(params.name, params.xaxis, params.weeks, params.cumulative)
+                localStorage.removeItem("chartParams")
+            }
+        }
+    </script>
+</body>
+</html>

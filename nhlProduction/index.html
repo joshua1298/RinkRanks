@@ -1,0 +1,631 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Rink Ranks</title>
+
+    
+    <link rel="stylesheet" type="text/css" href="nhl.css" media="screen" />
+    
+    <!--Tailwind CSS-->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!--font-
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    -->
+
+
+</head>
+<body>
+    <!--Layout → Flex/Grid → Spacing → Typography → Color → Effects → Misc-->
+
+    <div class="w-dvh h-20 md:16 flex justify-between gap-x-4 bg-[var(--color-t)] border-b-2 border-black shadow-md hover:shadow-xl transition-shadow duration-300">
+        <div id="title" class="flex flex-col w-52 pl-2 justify-center items-center text-center">
+            <a href="index.html">
+                <h1 class="font-bold text-4xl">Rink Ranks</h1>
+                <h2 class="text-sm italic">Math Based Power Ranking</h2>
+            </a>
+        </div>
+
+        <div id="week" class="w-48 flex items-center justify-center text-3xl ">Week 22</div>
+
+        <div class="w-2/3 px-2 flex items-center justify-around">
+            <!--<button type="button" class="hover:font-bold">Past Weeks</button>-->
+            <!--<button type="button" class="hover:font-bold">Cumlative Ranking</button>-->
+            <a href="https://www.nhl.com/standings" target="_blank" class="hover:font-bold">Current Standings</a>
+            <a href="chart.html">
+                <button type="button" class="hover:font-bold" onclick="chart()">Charts and Visuals</button>
+            </a>
+            <!--<button type="button" class="hover:font-bold">Rules</button> -->
+            <!--can add links for github/website-->
+        </div>
+    </div>
+    
+    
+    <table class="min-w-3xl table-auto border-collapse mx-8 mt-8">   
+        <thead class="bg-[var(--color-t)]">
+            <tr class="border-y-2 border-y-black">
+                <th class="w-10 px-2 border-x-2 border-black text-center">Rank</th>
+                <th class="w-80 px-2 border-x-2 border-black text-center">Team</th>
+                <th title="Last 4 Week's Score Combined" class="w-20 px-2 border-x-2 border-black text-center">Score</th> <!--Power Ranking Score-->
+                <th title="Average Opponent Strength" class="w-20 px-2 border-x-2 border-black text-center">AOS</th> <!--Last Week's Rating-->
+                <th title="Games Played" class="w-20 px-2 border-x-2 border-black text-center">GP</th>
+                <th class="w-20 px-2 border-x-2 border-black text-center">Wins</th>
+                <th class="w-20 px-2 border-x-2 border-black text-center">Losses</th>
+                <th title="Overtime and Shootout Losses" class="w-20 px-2 border-x-2 border-black text-center">OTL</th>
+                <th title="Goal Differential" class="w-20 px-2 border-x-2 border-black text-center">GD</th> <!--Goal Differential-->
+                
+            </tr>
+        </thead>
+        <tbody id="tableBody">
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="1">
+                
+                <td class="w-10 px-2 text-center">1.</td>
+                <td class="px-2">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span class="text-red-500 text-sm" id="buffer">Loading...(≈3s / week of data requested)</span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="2">
+                <td class="w-10 px-2 text-center">2.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td class="w-10 px-2 text-center"></td>
+                <td class="w-10 px-2 text-center"></td>
+                <td class="w-10 px-2 text-center"></td>
+                <td class="w-10 px-2 text-center"></td>
+                <td class="w-10 px-2 text-center"></td>
+                <td class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="3">
+                <td class="w-10 px-2 text-center">3.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="4">
+                <td class="w-10 px-2 text-center">4.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="5">
+                <td class="w-10 px-2 text-center">5.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="6">
+                <td class="w-10 px-2 text-center">6.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="7">
+                <td class="w-10 px-2 text-center">7.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="8">
+                <td class="w-10 px-2 text-center">8.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="9">
+                <td class="w-10 px-2 text-center">9.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="10">
+                <td class="w-10 px-2 text-center">10.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="11">
+                <td class="w-10 px-2 text-center">11.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="12">
+                <td class="w-10 px-2 text-center">12.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="13">
+                <td class="w-10 px-2 text-center">13.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="14">
+                <td class="w-10 px-2 text-center">14.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="15">
+                <td class="w-10 px-2 text-center">15.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="16">
+                <td class="w-10 px-2 text-center">16.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="17">
+                <td class="w-10 px-2 text-center">17.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="18">
+                <td class="w-10 px-2 text-center">18.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="19">
+                <td class="w-10 px-2 text-center">19.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="20">
+                <td class="w-10 px-2 text-center">20.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="21">
+                <td class="w-10 px-2 text-center">21.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="22">
+                <td class="w-10 px-2 text-center">22.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="23">
+                <td class="w-10 px-2 text-center">23.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="24">
+                <td class="w-10 px-2 text-center">24.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="25">
+                <td class="w-10 px-2 text-center">25.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="26">
+                <td class="w-10 px-2 text-center">26.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="27">
+                <td class="w-10 px-2 text-center">27.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="28">
+                <td class="w-10 px-2 text-center">28.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="29">
+                <td class="w-10 px-2 text-center">29.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="30">
+                <td class="w-10 px-2 text-center">30.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="31">
+                <td class="w-10 px-2 text-center">31.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+            <tr class="odd:bg-[var(--color-odd)] even:bg-[var(--color-even)] hover:bg-[var(--color-p3)] 
+                hover:scale-[1.01] transition duration-50 ease-in-out" data-rank="32">
+                <td class="w-10 px-2 text-center">32.</td>
+                <td class="px-2 text-center">
+                    <div class="pl-2 w-full flex gap-x-4 items-center">
+                        <img class="size-6 align-middle" alt="Team Logo">
+                        <span></span>
+                    </div>
+                </td>
+                <td title="Score" class="w-10 px-2 text-center"></td>
+                <td title="Average Opponent Strength" class="w-10 px-2 text-center"></td>
+                <td title="Games Played" class="w-10 px-2 text-center"></td>
+                <td title="Wins" class="w-10 px-2 text-center"></td>
+                <td title="Losses" class="w-10 px-2 text-center"></td>
+                <td title="Overtime and Shootout Losses" class="w-10 px-2 text-center"></td>
+                <td title="Goal Differential" class="w-10 px-2 text-center"></td>
+            </tr>
+        </tbody>
+    </table>
+
+
+    <!--Table Legend-->
+    <div class="w-[59rem] h-48 mx-8 mb-32">
+        <ul style="list-style-position: inside;">
+            <li class="font-bold text-2xl italic p">Legend</li>
+            <li style="list-style-type: circle;" class="pl-4 text-xs">Rank - ordered by score</li>
+            <li style="list-style-type: circle;" class="pl-4 text-xs">Score - Accumulated score for last four weeks (see rules for info on how score is calculated)</li>
+            <li style="list-style-type: circle;" class="pl-4 text-xs">AOS - Averages the strength of schedule(based on league standings)</li>
+            <li style="list-style-type: circle;" class="pl-4 text-xs">GP - Games played during the last four weeks</li>
+            <li style="list-style-type: circle;" class="pl-4 text-xs">Wins - Accumulated wins over the last four weeks</li>
+            <li style="list-style-type: circle;" class="pl-4 text-xs">Losses - Accumulated losses over the last four weeks</li>
+            <li style="list-style-type: circle;" class="pl-4 text-xs">OTL - Combined overtime and shootout losses over the last four weeks</li>
+            <li style="list-style-type: circle;" class="pl-4 text-xs">GD - Goal differential over the last four weeks</li>
+        </ul>
+    </div>
+
+    <script type="text/javascript" src="nhl.js"></script>
+</body>
+</html>
