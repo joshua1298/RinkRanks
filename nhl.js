@@ -1,6 +1,6 @@
 const statCache = {} //used to cache results to limit api calls, stores each standings call
 let teamsArray
-const todayObject = "Decemeber 11, 2024"
+const todayObject = "December 11, 2024"
 //const todayObject = new Date()
 let chart = null //variable to store chart object
 
@@ -801,3 +801,4 @@ function loadSideInfo(object, stands){
         bottom.appendChild(gameScore)
     }
 }
+
